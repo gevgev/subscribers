@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -43,5 +44,13 @@ public class SubscriberController {
     	}
         return results;
     }
+
+    @RequestMapping(method=RequestMethod.POST)
+    public Subscriber saveSubscriber(@RequestBody Subscriber subscriber) {
+    	subscriber.setId(dbDataAccess.createSubscriber(subscriber));
+
+    	return subscriber;
+    }
+
 
 }

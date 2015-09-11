@@ -1,6 +1,14 @@
 package service;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+@Entity
 public class Subscriber {
+	
+	@Id
+	@GeneratedValue
 	private int id;
 	private String apiKey;
 	private String mobileToken;

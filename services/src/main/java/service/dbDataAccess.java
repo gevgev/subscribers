@@ -4,6 +4,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.PreparedStatement;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -120,6 +121,56 @@ public class dbDataAccess {
 		}
 		
 		return subscriber;
+	}
+
+	//
+	// Save ne subscriber record
+	// 
+	public static int createSubscriber(Subscriber newSubscriber) {
+
+		String url = null;
+		
+		url = 
+			"jdbc:mysql://173.194.110.154:3306/Subscriptions?user=testuser&password=usertestpsw01.";
+
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			logger.error(e.toString());
+			
+			return -1;
+		}
+
+		java.sql.Connection conn;
+
+		try {
+			logger.info("url = " + url);
+			
+			conn = DriverManager.getConnection(url);
+			
+			String insertTableSQL = "INSERT INTO Subscriber"
+					+ "(apiKey, mobileToken) VALUES"
+					+ "(?,?)";
+			
+			java.sql.PreparedStatement preparedStatement = conn.prepareStatement(insertTableSQL, Statement.RETURN_GENERATED_KEYS);
+			preparedStatement.setString(1, newSubscriber.getApiKey());
+			preparedStatement.setString(2, newSubscriber.getMobileToken());
+			// execute insert SQL statement
+			preparedStatement .executeUpdate();
+
+			ResultSet rs = preparedStatement.getGeneratedKeys();
+			rs.next();
+			return rs.getInt(1);
+
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			logger.error(e1.toString());
+		}
+		
+		return -1;
 	}
 
 }
