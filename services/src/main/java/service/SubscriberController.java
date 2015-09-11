@@ -8,13 +8,40 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.List;
+import java.util.ArrayList;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @Controller
 @RequestMapping("/subscriber")
 public class SubscriberController {
 
+	private static final Logger log = LoggerFactory.getLogger(SubscriberController.class);
+
     @RequestMapping(method=RequestMethod.GET)
-    public @ResponseBody Subscriber getSubscriber(@RequestParam(value="id", required=false, defaultValue="1") int id) {
-        return new Subscriber(id, "apiKey12345", "mobileToken");
+    public @ResponseBody List<Subscriber> getSubscriber(@RequestParam(value="id", required=false) String id) {
+        // return new Subscriber(id, "apiKey12345", "mobileToken");
+
+    	List<Subscriber> results = null;
+
+    	if(id == null) {
+    		results = dbDataAccess.getSubscribers();
+    	}
+    	else {
+    		try {
+    			results = new ArrayList<Subscriber>();
+    			int _id = Integer.parseInt(id);
+        		Subscriber subscriber = dbDataAccess.getSubscriber(_id);
+        		results.add(subscriber);
+    		}
+    		catch(Exception ex) {
+				ex.printStackTrace();
+				log.error(ex.toString());
+    		}
+    	}
+        return results;
     }
 
 }

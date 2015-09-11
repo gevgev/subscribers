@@ -93,7 +93,7 @@ public class dbDataAccess {
 			conn = DriverManager.getConnection(url);
 
 			String query = "SELECT subscriberId, apiKey, mobileToken FROM Subscriptions.Subscriber " +
-							"WHERE id = ?";
+							"WHERE subscriberId = ?";
 
 			querySubscriber = conn.prepareStatement(query);
 			querySubscriber.setInt(1, id);
