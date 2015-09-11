@@ -1,20 +1,39 @@
 package service.models;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 @Entity
-public class Subscriber {
+@Table(name = "Subscriber")
+public class Subscriber implements Serializable {
 	
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long subscriberId;
+	
+	@NotNull
 	private String apiKey;
+	
+	@NotNull
 	private String mobileToken;
 	
-	public Subscriber(Long id, String apiKey, String mobileToken) {
+//	public Subscriber(Long id, String apiKey, String mobileToken) {
+//		this.subscriberId = id;
+//		this.apiKey = apiKey;
+//		this.mobileToken = mobileToken;
+//	}
+	
+	public Subscriber(long id) { 
 		this.subscriberId = id;
+	}
+
+	public Subscriber(String apiKey, String mobileToken) {
 		this.apiKey = apiKey;
 		this.mobileToken = mobileToken;
 	}
@@ -22,11 +41,11 @@ public class Subscriber {
 	public Subscriber() {
 	}
 	
-	public Long getId() {
+	public Long getSubscriberId() {
 		return subscriberId;
 	}
 	
-	public void setId(Long id) {
+	public void setSubscriberId(Long id) {
 		this.subscriberId = id;
 	}
 	

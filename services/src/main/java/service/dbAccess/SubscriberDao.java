@@ -67,8 +67,8 @@ package service.dbAccess;
 		  /**
 		   * Return the user having the passed id.
 		   */
-		  public Subscriber getById(Long id) {
-		    return entityManager.find(Subscriber.class, id);
+		  public Subscriber getById(Long subscriberId) {
+		    return entityManager.find(Subscriber.class, subscriberId);
 		  }
 
 		  /**

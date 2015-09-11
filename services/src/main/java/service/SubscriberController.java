@@ -63,7 +63,7 @@ public class SubscriberController {
 //    				_id, 
 //    				subscriber.getApiKey(), subscriber.getMobileToken() );
     	
-    	subscriberDao.create(subscriber); 
+    	// subscriberDao.create(subscriber); 
     	
     	Subscriber _subscriber = subscriberDao.create(subscriber);
     	
