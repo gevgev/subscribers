@@ -1,4 +1,4 @@
-package models;
+package service.models;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,12 +9,12 @@ public class Subscriber {
 	
 	@Id
 	@GeneratedValue
-	private int id;
+	private Long subscriberId;
 	private String apiKey;
 	private String mobileToken;
 	
-	public Subscriber(int id, String apiKey, String mobileToken) {
-		this.id = id;
+	public Subscriber(Long id, String apiKey, String mobileToken) {
+		this.subscriberId = id;
 		this.apiKey = apiKey;
 		this.mobileToken = mobileToken;
 	}
@@ -22,12 +22,12 @@ public class Subscriber {
 	public Subscriber() {
 	}
 	
-	public int getId() {
-		return id;
+	public Long getId() {
+		return subscriberId;
 	}
 	
-	public void setId(int id) {
-		this.id = id;
+	public void setId(Long id) {
+		this.subscriberId = id;
 	}
 	
 	public String getApiKey() {
