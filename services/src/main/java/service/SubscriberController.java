@@ -46,10 +46,16 @@ public class SubscriberController {
     }
 
     @RequestMapping(method=RequestMethod.POST)
-    public Subscriber saveSubscriber(@RequestBody Subscriber subscriber) {
-    	subscriber.setId(dbDataAccess.createSubscriber(subscriber));
+    public @ResponseBody Subscriber saveSubscriber(@RequestBody Subscriber subscriber) {
 
-    	return subscriber;
+    	log.info(String.format("New subscriber data: apiKey: [%s]   token: [%s]", subscriber.getApiKey(), subscriber.getMobileToken()));
+    	
+    	Subscriber _subscriber = 
+    		new Subscriber(
+    				dbDataAccess.createSubscriber(subscriber), 
+    				subscriber.getApiKey(), subscriber.getMobileToken() );
+
+    	return _subscriber;
     }
 
 

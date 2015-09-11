@@ -129,6 +129,8 @@ public class dbDataAccess {
 	public static int createSubscriber(Subscriber newSubscriber) {
 
 		String url = null;
+
+		logger.info(String.format("New subscriber data: apiKey: [%s]   token: [%s]", newSubscriber.getApiKey(), newSubscriber.getMobileToken()));
 		
 		url = 
 			"jdbc:mysql://173.194.110.154:3306/Subscriptions?user=testuser&password=usertestpsw01.";

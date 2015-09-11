@@ -18,6 +18,9 @@ public class Subscriber {
 		this.apiKey = apiKey;
 		this.mobileToken = mobileToken;
 	}
+
+	public Subscriber() {
+	}
 	
 	public int getId() {
 		return id;
