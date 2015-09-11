@@ -8,7 +8,7 @@ package service.dbAccess;
 
 	import org.springframework.stereotype.Repository;
 
-	import service.models.Subscriber;
+	import common.models.Subscriber;
 
 	/**
 	 * This class is used to access data for the User entity.
