@@ -27,19 +27,17 @@ public class SubscriberController {
 
     @RequestMapping(method=RequestMethod.GET)
     public @ResponseBody List<Subscriber> getSubscriber(@RequestParam(value="id", required=false) String id) {
-        // return new Subscriber(id, "apiKey12345", "mobileToken");
 
     	List<Subscriber> results = null;
 
     	if(id == null) {
-    		//results = dbDataAccess.getSubscribers();
     		results = subscriberDao.getAll();
     	}
     	else {
     		try {
     			results = new ArrayList<Subscriber>();
     			Long _id = Long.parseLong(id);
-        		// Subscriber subscriber = dbDataAccess.getSubscriber(_id);
+
     			Subscriber subscriber = subscriberDao.getById(_id);
         		results.add(subscriber);
     		}
@@ -55,19 +53,19 @@ public class SubscriberController {
     public @ResponseBody Subscriber saveSubscriber(@RequestBody Subscriber subscriber) {
 
     	log.info(String.format("New subscriber data: apiKey: [%s]   token: [%s]", subscriber.getApiKey(), subscriber.getMobileToken()));
-    	
-    	// int _id = dbDataAccess.createSubscriber(subscriber);
-    	
-//    	Subscriber _subscriber = 
-//    		new Subscriber(
-//    				_id, 
-//    				subscriber.getApiKey(), subscriber.getMobileToken() );
-    	
-    	// subscriberDao.create(subscriber); 
-    	
+    	    	
     	Subscriber _subscriber = subscriberDao.create(subscriber);
     	
     	return _subscriber;
+    }
+    
+    @RequestMapping(method=RequestMethod.PUT)
+    public @ResponseBody Subscriber updateSubscriber(@RequestBody Subscriber subscriber) {
+    	log.info(String.format("Updating subscriber data: id: [%s]  apiKey: [%s]   token: [%s]", subscriber.getSubscriberId().toString(), subscriber.getApiKey(), subscriber.getMobileToken()));
+    	
+    	subscriberDao.update(subscriber);
+    	
+    	return subscriber;
     }
 
 	  // Wire the UserDao used inside this controller.

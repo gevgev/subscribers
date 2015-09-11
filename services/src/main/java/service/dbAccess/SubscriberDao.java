@@ -74,7 +74,7 @@ package service.dbAccess;
 		  /**
 		   * Update the passed user in the database.
 		   */
-		  public void Update(Subscriber subscriber) {
+		  public void update(Subscriber subscriber) {
 		    entityManager.merge(subscriber);
 		    return;
 		  }
