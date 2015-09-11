@@ -1,1 +1,0 @@
-curl -X POST -d @subscriber.json http://localhost:8080/subscriber --header "Content-Type:application/json"

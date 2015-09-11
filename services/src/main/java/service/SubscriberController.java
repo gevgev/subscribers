@@ -1,6 +1,7 @@
 package service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -12,8 +13,13 @@ import service.models.Subscriber;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
+import javax.xml.ws.Response;
+
 import java.util.ArrayList;
 
+import org.apache.tomcat.jni.Status;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -66,6 +72,23 @@ public class SubscriberController {
     	subscriberDao.update(subscriber);
     	
     	return subscriber;
+    }
+    
+    @SuppressWarnings("rawtypes")
+	@RequestMapping(method=RequestMethod.DELETE)
+    public ResponseEntity deleteSubscriber(@RequestParam(value="id", required=true) Long id) {
+    	
+    	Subscriber subscriber = new Subscriber(id);
+    	try {
+    		subscriberDao.delete(subscriber);
+    		return ResponseEntity.ok().build();
+  
+    	} catch(Exception ex)
+    	{
+    		log.error(String.format("Exception while deleting subscriber id: [%s] --- : %s", id.toString(), ex.toString()));
+    		return ResponseEntity.notFound().build();
+    	}
+    	
     }
 
 	  // Wire the UserDao used inside this controller.
