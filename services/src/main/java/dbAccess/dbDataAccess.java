@@ -1,4 +1,4 @@
-package service;
+package dbAccess;
 
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+
+import models.Subscriber;
 
 public class dbDataAccess {
 	
