@@ -10,6 +10,17 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.core.MediaType;
+
+import org.codehaus.jackson.map.AnnotationIntrospector;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.map.introspect.JacksonAnnotationIntrospector;
+import org.codehaus.jackson.type.JavaType;
+
+import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.ClientResponse;
+import com.sun.jersey.api.client.GenericType;
+import com.sun.jersey.api.client.WebResource;
 
 import common.models.Subscriber;
 
@@ -32,19 +43,8 @@ public class DynamicSubscriberServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-        List<Subscriber> subscribers = new ArrayList<Subscriber>();
-        
-        Subscriber d1 = new Subscriber("dynamic_apikey0123", "dynamic_mobileToken234");
- 
-        Subscriber d2 = new Subscriber("dynamic_apikey0123", "dynamic_mobileToken234");
- 
-        Subscriber d3 = new Subscriber("dynamic_apikey0123", "dynamic_mobileToken234");
- 
-        subscribers.add(d1);
-        subscribers.add(d2);
-        subscribers.add(d3);
-        request.setAttribute("subscribersCtrl", subscribers);
+
+        request.setAttribute("subscribersCtrl", populateSubscribersList());
  
         RequestDispatcher view = request.getRequestDispatcher("SubscribersJSP.jsp");
         
@@ -59,5 +59,28 @@ public class DynamicSubscriberServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
+	
+	private List<Subscriber> populateSubscribersList() {
+		Client client = Client.create();
+
+		WebResource webResource = client
+		   .resource("http://localhost:8888/subscriber");
+
+		ClientResponse response = webResource.accept(MediaType.APPLICATION_JSON)
+                   .get(ClientResponse.class);
+
+		if (response.getStatus() != 200) {
+		   throw new RuntimeException("Failed : HTTP error code : "
+			+ response.getStatus());
+		}
+		
+
+		String jsonString = response.getEntity(String.class);
+	
+		List<Subscriber> list = response.getEntity(new GenericType<List<Subscriber>>(){}); 
+		return list;
+	}
+	
+	
 
 }
