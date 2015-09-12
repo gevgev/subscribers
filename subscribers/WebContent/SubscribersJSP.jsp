@@ -20,7 +20,7 @@
     	<td>${subscriber.subscriberId}</td>
         <td>${subscriber.apiKey}</td>
         <td>${subscriber.mobileToken}</td>
-        <td>Edit</td>
+        <td><a href=addSubscriber?id=${subscriber.subscriberId}>Edit</a></td>        
     </tr>
 </c:forEach>
 </table>
