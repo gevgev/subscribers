@@ -8,8 +8,9 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 
 
-//import common.models.Subscriber;
+import common.models.Subscriber;
  
+@SuppressWarnings("serial")
 public class SubscriberServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
