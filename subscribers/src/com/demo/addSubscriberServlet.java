@@ -17,6 +17,9 @@ import com.sun.jersey.api.client.WebResource;
 import common.models.Subscriber;
 
 import org.apache.log4j.Logger;
+import org.codehaus.jackson.JsonGenerationException;
+import org.codehaus.jackson.map.JsonMappingException;
+import org.codehaus.jackson.map.ObjectMapper;
 
 /**
  * Servlet implementation class addSubscriberServlet
@@ -62,7 +65,7 @@ public class addSubscriberServlet extends HttpServlet {
 
 		boolean result = CreateNewSubscriber(apiKey, mobileToken);
 		
-		logger.info(String.format("Create apiKey: [%s] mobileToken[%s]  status: [%b]",  apiKey, mobileToken, result));
+		logger.info(String.format("Created with apiKey: [%s] mobileToken[%s]  status: [%b]",  apiKey, mobileToken, result));
 		
 		RequestDispatcher view = request.getRequestDispatcher("SubscribersJSP.jsp");
         
@@ -73,18 +76,40 @@ public class addSubscriberServlet extends HttpServlet {
         Client client = Client.create();        
         WebResource resource = client.resource("http://localhost:8888/subscriber");    
         Subscriber newSubscriber = new Subscriber(apiKey, mobileToken);
-        
-        ClientResponse response = resource.accept(MediaType.APPLICATION_JSON).put(ClientResponse.class, newSubscriber);
-        
-		if (response.getStatus() != 200) {
-			   throw new RuntimeException("Failed : HTTP error code : "
-				+ response.getStatus());
-			}
+        newSubscriber.setSubscriberId(-1L);
+    	
+        ObjectMapper mapper = new ObjectMapper();
+    	
+        try {
+			String jsonString = mapper.writeValueAsString(newSubscriber);
+	       
+			logger.info("About to submit PUT: " + jsonString);
+			
+			ClientResponse response = resource.type(MediaType.APPLICATION_JSON).put(ClientResponse.class, jsonString);
+	        
+			if (response.getStatus() != 200) {
+				   throw new RuntimeException("Failed : HTTP error code : "
+					+ response.getStatus());
+				}
+			
+			Subscriber subscriber = mapper.readValue(response.getEntity(String.class), Subscriber.class);
 
-        logger.info(String.format("Status: [%d]  SubscriberId: [%d]",
-        		response.getStatus(), response.getEntity(Subscriber.class).getSubscriberId()));
-		
-		return true;
+	        logger.info(String.format("Status: [%d]  SubscriberId: [%d]",
+	        		response.getStatus(), subscriber.getSubscriberId() ));
+			
+			return true;
+		} catch (JsonGenerationException e) {
+			e.printStackTrace();
+			logger.error("Exception while converting to JSON:"+e.toString());
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+			logger.error("Exception while converting to JSON:"+e.toString());
+		} catch (IOException e) {
+			e.printStackTrace();
+			logger.error("Exception while converting to JSON:"+e.toString());
+		}
+        
+        return false;    
 	}
 
 }
