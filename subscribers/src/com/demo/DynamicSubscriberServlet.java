@@ -62,7 +62,7 @@ public class DynamicSubscriberServlet extends HttpServlet {
 		Client client = Client.create();
 
 		WebResource webResource = client
-		   .resource("http://localhost:8888/subscriber");
+		   .resource(com.util.Properties.SERVICE_URL);
 
 		ClientResponse response = webResource.accept(MediaType.APPLICATION_JSON)
                    .get(ClientResponse.class);

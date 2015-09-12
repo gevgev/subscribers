@@ -12,7 +12,7 @@
 <th>SubscriberId</th>
 <th>apiKey</th>
 <th>mobileToken</th>
-<th></th>
+<th colspan=2>Action</th>
 </tr>
 
 <c:forEach items="${subscribersCtrl}" var="subscriber">
@@ -21,6 +21,7 @@
         <td>${subscriber.apiKey}</td>
         <td>${subscriber.mobileToken}</td>
         <td><a href=updateSubscriber?id=${subscriber.subscriberId}>Edit</a></td>        
+        <td><a href=deleteSubscriber?id=${subscriber.subscriberId}>Delete</a></td>        
     </tr>
 </c:forEach>
 </table>

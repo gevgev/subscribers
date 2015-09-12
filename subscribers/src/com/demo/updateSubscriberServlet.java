@@ -62,7 +62,7 @@ public class updateSubscriberServlet extends HttpServlet {
 
 	private Subscriber getSubscriberById(String id) {
         Client client = Client.create();        
-        WebResource resource = client.resource("http://localhost:8888/subscriber").queryParam("id", id); 
+        WebResource resource = client.resource(com.util.Properties.SERVICE_URL).queryParam("id", id); 
     	
 		ClientResponse response = resource.type(MediaType.APPLICATION_JSON).get(ClientResponse.class);
         
@@ -106,7 +106,7 @@ public class updateSubscriberServlet extends HttpServlet {
 
 	private boolean UpdateSubscriber(String subscriberId, String apiKey, String mobileToken) {
         Client client = Client.create();        
-        WebResource resource = client.resource("http://localhost:8888/subscriber");    
+        WebResource resource = client.resource(com.util.Properties.SERVICE_URL);    
         Subscriber newSubscriber = new Subscriber(apiKey, mobileToken);
     	
         ObjectMapper mapper = new ObjectMapper();
