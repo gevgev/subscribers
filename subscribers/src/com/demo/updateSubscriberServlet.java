@@ -24,16 +24,16 @@ import org.codehaus.jackson.map.ObjectMapper;
 /**
  * Servlet implementation class addSubscriberServlet
  */
-@WebServlet("/addSubscriber")
-public class addSubscriberServlet extends HttpServlet {
+@WebServlet("/updateSubscriber")
+public class updateSubscriberServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
  
-	final static Logger logger = Logger.getLogger(addSubscriberServlet.class);
+	final static Logger logger = Logger.getLogger(updateSubscriberServlet.class);
 
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public addSubscriberServlet() {
+    public updateSubscriberServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -43,9 +43,44 @@ public class addSubscriberServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		RequestDispatcher view = request.getRequestDispatcher("addSubscriberJSP.jsp");
+		String id = request.getParameter("id");
+		
+		if( id!= null) {
+			
+			Subscriber subscriber = getSubscriberById(id);
+			if(subscriber != null) {
+				request.setAttribute("apiKey", subscriber.getApiKey());
+				request.setAttribute("mobileToken", subscriber.getMobileToken());
+				request.setAttribute("subscriberId", subscriber.getSubscriberId().toString());				
+			}
+		}
+
+		RequestDispatcher view = request.getRequestDispatcher("updateSubscriberJSP.jsp");
         
         view.forward(request, response);		
+	}
+
+	private Subscriber getSubscriberById(String id) {
+        Client client = Client.create();        
+        WebResource resource = client.resource("http://localhost:8888/subscriber").queryParam("id", id); 
+    	
+		ClientResponse response = resource.type(MediaType.APPLICATION_JSON).get(ClientResponse.class);
+        
+		if (response.getStatus() != 200) {
+			   throw new RuntimeException("Failed : HTTP error code : "
+				+ response.getStatus());
+			}
+
+		String jsonString = response.getEntity(String.class).toString();
+		
+		JsonMarshallUnmarshaller unmarshaller = new JsonMarshallUnmarshaller();
+		
+		Subscriber subscriber = unmarshaller.unmarshal(jsonString).get(0);
+
+        logger.info(String.format("Received: [%d]  SubscriberId: [%d]  apiKey [%s]  mobileToken [%s]",
+        		response.getStatus(), subscriber.getSubscriberId(), subscriber.getApiKey(), subscriber.getMobileToken() ));
+		
+		return subscriber;
 	}
 
 	/**
@@ -55,36 +90,39 @@ public class addSubscriberServlet extends HttpServlet {
 
 		String apiKey;
 		String mobileToken;
+		String subscriberId;
 		
 		apiKey = request.getParameter("apiKey");
 		mobileToken = request.getParameter("mobileToken");
+		subscriberId = request.getParameter("id");
+//		subscriberId = request.getParameter("subscriberId");
 				
-			
-		boolean result = CreateNewSubscriber(apiKey, mobileToken);			
-		logger.info(String.format("Created with apiKey: [%s] mobileToken[%s]  status: [%b]",  
-				apiKey, mobileToken, result));
-			
+		boolean result = UpdateSubscriber(subscriberId, apiKey, mobileToken);			
+		logger.info(String.format("Modified with id: [%s] apiKey: [%s] mobileToken[%s]  status: [%b]", 
+				subscriberId, apiKey, mobileToken, result));
 		
 		response.sendRedirect("/subscribers/dynamicsubscribers");
 	}
 
-	private boolean CreateNewSubscriber(String apiKey, String mobileToken) {
+	private boolean UpdateSubscriber(String subscriberId, String apiKey, String mobileToken) {
         Client client = Client.create();        
         WebResource resource = client.resource("http://localhost:8888/subscriber");    
         Subscriber newSubscriber = new Subscriber(apiKey, mobileToken);
-        // newSubscriber.setSubscriberId(-1L);
     	
         ObjectMapper mapper = new ObjectMapper();
     	
         try {
+        	Long id = Long.parseLong(subscriberId);
+        	newSubscriber.setSubscriberId(id);
+        	
 			String jsonString = mapper.writeValueAsString(newSubscriber);
 	       
-			logger.info("About to create new POST: " + jsonString);
+			logger.info("About to Update by PUT: " + jsonString);
 			
-			ClientResponse response = resource.type(MediaType.APPLICATION_JSON).post(ClientResponse.class, jsonString);
+			ClientResponse response = resource.type(MediaType.APPLICATION_JSON).put(ClientResponse.class, jsonString);
 	        
 			if (response.getStatus() != 200) {
-				logger.error("Received HTTP Error" + response.getStatus() + " for POST: "+ jsonString );
+				logger.error("Received HTTP Error" + response.getStatus() + " for PUT: "+ jsonString );
 				   throw new RuntimeException("Failed : HTTP error code : "
 					+ response.getStatus());
 				}
@@ -105,8 +143,7 @@ public class addSubscriberServlet extends HttpServlet {
 			e.printStackTrace();
 			logger.error("Exception while converting to JSON:"+e.toString());
 		}
-        
-        return false;    
+        return false;
 	}
 
 }

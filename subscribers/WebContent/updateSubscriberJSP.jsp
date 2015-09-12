@@ -11,10 +11,10 @@
 </head>
 <body>
 
-	<h1>Add Subscriber</h1>
+	<h1>Update Subscriber</h1>
 
-	<form action="addSubscriber" method="POST">
-		
+	<form action="updateSubscriber" method="POST">
+		<input type="hidden" name="id" value="${subscriberId}" />
 		<table>
 			<tr>
 				<th>apiKey</th>
@@ -24,7 +24,7 @@
 			<tr>
 				<td> <input type="text" name="apiKey" value="${apiKey}"> </td>
 				<td> <input type="text" name="mobileToken" value="${mobileToken}" /> </td>
-				
+				<td> <input type="text" name="subscriberId" value="${subscriberId}" disabled/> </td>
 			</tr>
 		</table>
 	
