@@ -24,13 +24,17 @@ import com.sun.jersey.api.client.WebResource;
 
 import common.models.Subscriber;
 
+import org.apache.log4j.Logger;
+
 /**
  * Servlet implementation class dynamicSubscriberServlet
  */
 @WebServlet("/dynamicsubscribers")
 public class DynamicSubscriberServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+
+	final static Logger logger = Logger.getLogger(DynamicSubscriberServlet.class);
+	
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -74,10 +78,13 @@ public class DynamicSubscriberServlet extends HttpServlet {
 			+ response.getStatus());
 		}
 		
-
 		String jsonString = response.getEntity(String.class);
-	
-		List<Subscriber> list = response.getEntity(new GenericType<List<Subscriber>>(){}); 
+		logger.info("Received: " + jsonString);
+		
+		JsonMarshallUnmarshaller marshaller = new JsonMarshallUnmarshaller();
+		
+		List<Subscriber> list = marshaller.unmarshal(jsonString);
+		
 		return list;
 	}
 	
