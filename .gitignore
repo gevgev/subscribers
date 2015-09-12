@@ -1,1 +1,11 @@
 /services/target/
+/common/.classpath
+/common/.settings/
+/services/.classpath
+/services/.settings/
+/services/.springBeans
+/services/dep.txt
+/subscribers/.classpath
+/subscribers/.settings/
+/subscribers/WebContent/WEB-INF/lib/log4j-api-2.3.jar
+/subscribers/WebContent/WEB-INF/lib/log4j-core-2.3.jar
