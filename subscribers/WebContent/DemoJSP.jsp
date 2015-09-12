@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
 <html>
 <body>
-<b>The Demo Object Names Are:-
+<b>The Demo Object Names Are </b>>
 <br>
  
 <table>
