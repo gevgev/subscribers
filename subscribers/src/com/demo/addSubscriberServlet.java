@@ -8,6 +8,15 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.core.MediaType;
+
+import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.ClientResponse;
+import com.sun.jersey.api.client.WebResource;
+
+import common.models.Subscriber;
+
+import org.apache.log4j.Logger;
 
 /**
  * Servlet implementation class addSubscriberServlet
@@ -15,7 +24,9 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/addSubscriber")
 public class addSubscriberServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+ 
+	final static Logger logger = Logger.getLogger(addSubscriberServlet.class);
+
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -42,8 +53,38 @@ public class addSubscriberServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+
+		String apiKey;
+		String mobileToken;
+		
+		apiKey = request.getParameter("apiKey");
+		mobileToken = request.getParameter("mobileToken");
+
+		boolean result = CreateNewSubscriber(apiKey, mobileToken);
+		
+		logger.info(String.format("Create apiKey: [%s] mobileToken[%s]  status: [%b]",  apiKey, mobileToken, result));
+		
+		RequestDispatcher view = request.getRequestDispatcher("SubscribersJSP.jsp");
+        
+        view.forward(request, response);
+	}
+
+	private boolean CreateNewSubscriber(String apiKey, String mobileToken) {
+        Client client = Client.create();        
+        WebResource resource = client.resource("http://localhost:8888/subscriber");    
+        Subscriber newSubscriber = new Subscriber(apiKey, mobileToken);
+        
+        ClientResponse response = resource.accept(MediaType.APPLICATION_JSON).put(ClientResponse.class, newSubscriber);
+        
+		if (response.getStatus() != 200) {
+			   throw new RuntimeException("Failed : HTTP error code : "
+				+ response.getStatus());
+			}
+
+        logger.info(String.format("Status: [%d]  SubscriberId: [%d]",
+        		response.getStatus(), response.getEntity(Subscriber.class).getSubscriberId()));
+		
+		return true;
 	}
 
 }

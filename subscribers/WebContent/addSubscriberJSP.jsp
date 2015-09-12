@@ -8,7 +8,7 @@
 </head>
 <body>
 	<h1>Add Subscriber</h1>
-	<form action="addSubscriber" method="GET">
+	<form action="addSubscriber" method="POST">
 		<table>
 			<tr>
 				<th>apiKey</th>
