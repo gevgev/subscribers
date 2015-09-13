@@ -14,6 +14,13 @@
     </parent>
 
     <dependencies>
+		<dependency>
+		    <groupId>common.models</groupId>
+		    <artifactId>common</artifactId>
+		    <version>0.1.0</version>
+		    <scope>system</scope>
+		    <systemPath>${project.basedir}/src/main/resources/common-0.1.0.jar</systemPath>
+		</dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
