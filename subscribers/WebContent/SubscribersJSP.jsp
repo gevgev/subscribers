@@ -4,6 +4,18 @@
 
 <html>
 <body>
+
+<script>
+function deleteSubscriber(id) {
+	var answer = confirm("Delete subscriber id:" + id + "?")
+	if (answer){
+		window.location.href = 'deleteSubscriber?id='+id;		
+	}
+	else{
+	}
+}
+</script>
+
 <b>The Demo Object Names Are:-</b>
 <br>
  
@@ -21,7 +33,7 @@
         <td>${subscriber.apiKey}</td>
         <td>${subscriber.mobileToken}</td>
         <td><a href=updateSubscriber?id=${subscriber.subscriberId}>Edit</a></td>        
-        <td><a href=deleteSubscriber?id=${subscriber.subscriberId}>Delete</a></td>        
+        <td><input type="button" onclick="deleteSubscriber(${subscriber.subscriberId})" name="Delete" value="Delete"></td>        
     </tr>
 </c:forEach>
 </table>
