@@ -27,6 +27,11 @@
                      {
                         "containerPort":8080,
                      }
+                  ],
+                  "env":[
+                     {
+                        "webservicesIP":""
+                     }
                   ]
                }
             ]
