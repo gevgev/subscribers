@@ -1,0 +1,22 @@
+{
+   "kind":"Service",
+   "apiVersion":"v1",
+   "metadata": {
+      "name":"webservices",
+      "labels":{
+         "name":"webservices"
+      }
+   },
+   "spec":{
+      "ports": [
+        {
+          "port":80,
+          "targetPort":8888
+        }
+      ],
+      "selector":{
+         "name":"webservices"
+      },
+      "type": "LoadBalancer"
+   }
+}

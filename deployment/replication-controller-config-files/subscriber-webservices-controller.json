@@ -1,0 +1,36 @@
+{
+   "kind":"ReplicationController",
+   "apiVersion":"v1",
+   "metadata":{
+      "name":"webservices",
+      "labels":{
+         "name":"webservices"
+      }
+   },
+   "spec":{
+      "replicas":3,
+      "selector":{
+         "name":"webservices"
+      },
+      "template":{
+         "metadata":{
+            "labels":{
+               "name":"webservices"
+            }
+         },
+         "spec":{
+            "containers":[
+               {
+                  "name":"webservices",
+                  "image":"gcr.io/subscribers-1072/webservices-node",
+                  "ports":[
+                     {
+                        "containerPort":8888
+                     }
+                  ]
+               }
+            ]
+         }
+      }
+   }
+}
