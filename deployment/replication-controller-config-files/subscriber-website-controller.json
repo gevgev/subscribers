@@ -25,12 +25,13 @@
                   "image":"gcr.io/subscribers-1072/website-node",
                   "ports":[
                      {
-                        "containerPort":8080,
+                        "containerPort":8080
                      }
                   ],
                   "env":[
                      {
-                        "webservicesIP":""
+                        "name": "SERVICES_URL",
+                        "value": "http://104.197.141.51/subscriber"
                      }
                   ]
                }

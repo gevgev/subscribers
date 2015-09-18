@@ -49,7 +49,7 @@ public class deleteSubscriberServlet extends HttpServlet {
 		if (id != null) {
         	
 			Client client = Client.create();       
-	        WebResource resource = client.resource(com.util.Properties.SERVICE_URL).queryParam("id", id); 
+	        WebResource resource = client.resource(com.util.Properties.getServiceURL()).queryParam("id", id); 
 
 	        logger.info("About to Delete: " + id);
 	    	

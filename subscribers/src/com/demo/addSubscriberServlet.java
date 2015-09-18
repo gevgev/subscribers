@@ -70,7 +70,7 @@ public class addSubscriberServlet extends HttpServlet {
 
 	private boolean CreateNewSubscriber(String apiKey, String mobileToken) {
         Client client = Client.create();        
-        WebResource resource = client.resource(com.util.Properties.SERVICE_URL);    
+        WebResource resource = client.resource(com.util.Properties.getServiceURL());    
         Subscriber newSubscriber = new Subscriber(apiKey, mobileToken);
         // newSubscriber.setSubscriberId(-1L);
     	
