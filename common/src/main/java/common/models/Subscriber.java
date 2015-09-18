@@ -7,7 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
+// import javax.validation.constraints.NotNull;
 
 @SuppressWarnings("serial")
 @Entity
@@ -18,10 +18,10 @@ public class Subscriber implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long subscriberId;
 	
-	@NotNull
+//	@NotNull
 	private String apiKey;
 	
-	@NotNull
+//	@NotNull
 	private String mobileToken;
 	
 //	public Subscriber(Long id, String apiKey, String mobileToken) {

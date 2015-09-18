@@ -29,7 +29,7 @@ RUN su root \
   && chmod +x /usr/share/tomcat/bin/*.sh \
   && mkdir -p /usr/share/tomcat/webapps/subscriptionsviewer/
 
-COPY subscriberswebsite/ /usr/share/tomcat/webapps/subscriptionsviewer/
+COPY subscribers/ /usr/share/tomcat/webapps/subscribers/
 
 EXPOSE 80 443 8080
 
