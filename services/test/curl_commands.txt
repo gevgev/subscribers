@@ -1,8 +1,8 @@
-curl -X -v POST -d @newSubscriber.json http://localhost:8888/subscriber --header "Content-Type:application/json"
+curl -X POST -d @newSubscriber.json http://localhost:8888/subscriber --header "Content-Type:application/json"
 
-curl -X -v PUT -d @updateSubscriber.json http://localhost:8888/subscriber --header "Content-Type:application/json"
+curl -X PUT -d @updateSubscriber.json http://localhost:8888/subscriber --header "Content-Type:application/json"
 
-curl -X -v DELETE http://localhost:8888/subscriber?id=16 --header "Content-Type:application/json"
+curl -X DELETE http://localhost:8888/subscriber?id=16 --header "Content-Type:application/json"
 
 curl -X -v GET http://localhost:8888/subscriber
 
