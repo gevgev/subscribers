@@ -1,0 +1,91 @@
+- Intro on what the demo will be about:
+
+    - The project description
+    - Docker and Google Container engine quick overview
+    - What the demo will be about:
+
+        - Problem statement: ETag
+        - Hot fix roll out description
+    - Q&A
+- The project
+
+    - Eclipse and MySqlBenchmark, show and explain the project
+    - Demo local Eclipse and browser, services and website
+
+        - http://localhost:8888/subscriber?id=9
+        - http://localhost:8080/subscribers/dynamicsubscribers
+- Docker and Google Container intro
+
+    - Explain Docker, show Dockerfile both services and site, demo local Docker images, container, run
+    - Show Google Cloud Dev Panel:
+
+        - project guestbook - SQL, activity, IP access explained
+        - project subscribers - Home, logs, Container, VM instances
+        - monitoring page
+    - Demo the app in the cloud: services, website
+
+        - http://104.197.141.51/subscriber?id=12
+        - http://104.197.108.224/subscribers/dynamicsubscribers
+    - Replication controller and Kubernetes, show RC files in sublime
+- Demo
+
+    - Init and check docker/gcloud:
+
+        - gcloud components update
+        - eval "$(docker-machine env default)"
+        - gcloud config list
+    - Demo description: rolling out update of services with ETag
+    - Show curl in terminal against local and cloud - diff ETag
+
+        - curl -v http://104.197.141.51/subscriber?id=12
+        - curl -v http://localhost:8888/subscriber?id=9
+    - Start build and deployment: terminal
+
+        - mvn package services
+        - test service jar - browser and curl
+
+            - java -jar target/service-0.1.0.jar
+            - curl -v http://localhost:8888/subscriber?id=9
+        - show Dockerfiles in sublime
+        - build Docker image
+
+            - docker build -t gcr.io/subscribers-1072/webservices-node:demo .
+        - test locally - run Docker, test browser and curl, ssh
+
+            - docker images
+            - docker run -d gcr.io/subscribers-1072/webservices-node:demo
+            - docker ps
+            - docker-machine ip default
+            - curl -v ...
+            - docker exec -it <mycontainerId> bash
+        - push the image to Cloud
+
+            - gcloud docker push gcr.io/subscribers-1072/webservices-node:demo
+            - show it in Google Dev Panel
+        - explain RC roll-out command and go over the controllers and services flies content
+        - show pods and RC
+            - cloud get rc
+            - gclous get pods
+        - show curl for current version (again)
+
+            - curl -v http://104.197.141.51/subscriber?id=12
+        - start rolling update
+
+            - kubectl rolling-update webservices --image=gcr.io/subscribers-1072/webservices-node:demo
+        - test curl
+
+            - curl -v http://104.197.141.51/subscriber?id=12
+        - comment on roll back
+- Extra: scaling and logs
+
+    - Explain scaling
+    - Demo scaling for website and for web services
+
+        - kubectl scale --replicas=5 rc website
+        - kubectl scale --replicas=5 rc webservices
+    - Logs in cloud
+
+        - kubectl logs webservices-xxxx
+        - kubectl logs -f webservices-xxxx
+
+- Questions
