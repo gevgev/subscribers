@@ -1,7 +1,7 @@
 # subscribers
 simple REST services, with mySQL backend, JSP Web front, with Docker/Kubernetes Replication controller (Google Container Engine)
 
-Floder content description:
+Folders content description:
 
 - common:       class library, shared accross web services (services) and web site projects (subscribers) - Subscriber class
 - deployment:   Docker files, Kubernetes files, etc.
