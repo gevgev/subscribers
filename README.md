@@ -1,4 +1,6 @@
 # subscribers
+Demo for Docker/Google Container engine multi layer app deployment
+
 simple REST services, with mySQL backend, JSP Web front, with Docker/Kubernetes Replication controller (Google Container Engine)
 
 Folders content description:
