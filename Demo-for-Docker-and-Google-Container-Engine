@@ -56,7 +56,8 @@
             - docker run -d gcr.io/subscribers-1072/webservices-node:demo
             - docker ps
             - docker-machine ip default
-            - curl
+            - curl -v ...
+            - docker exec -it <mycontainerId> bash
         - push the image to Cloud
 
             - gcloud docker push gcr.io/subscribers-1072/webservices-node:demo
