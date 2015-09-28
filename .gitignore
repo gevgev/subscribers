@@ -11,3 +11,6 @@
 /RemoteSystemsTempFiles
 /Servers
 /.recommenders/
+/deployment/Services/*.jar
+/deployment/Website/subscribers/
+/deployment/Website/*.war
