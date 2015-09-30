@@ -22,7 +22,7 @@
             "containers":[
                {
                   "name":"website",
-                  "image":"gcr.io/subscribers-1072/website-node",
+                  "image":"gcr.io/subscribers-1084/website-node:v0.1",
                   "ports":[
                      {
                         "containerPort":8080
@@ -31,7 +31,7 @@
                   "env":[
                      {
                         "name": "SERVICES_URL",
-                        "value": "http://104.197.141.51/subscriber"
+                        "value": "http://130.211.143.5/subscriber"
                      }
                   ]
                }

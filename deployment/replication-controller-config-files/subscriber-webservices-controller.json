@@ -22,7 +22,7 @@
             "containers":[
                {
                   "name":"webservices",
-                  "image":"gcr.io/subscribers-1072/webservices-node",
+                  "image":"gcr.io/subscribers-1084/webservices-node",
                   "ports":[
                      {
                         "containerPort":8888
