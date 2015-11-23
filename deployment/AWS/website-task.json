@@ -1,0 +1,48 @@
+{
+  "requiresAttributes": [],
+  "taskDefinitionArn": "arn:aws:ecs:us-west-2:402807461013:task-definition/website:4",
+  "status": "ACTIVE",
+  "revision": 4,
+  "containerDefinitions": [
+    {
+      "volumesFrom": [],
+      "memory": 384,
+      "extraHosts": null,
+      "dnsServers": null,
+      "disableNetworking": null,
+      "dnsSearchDomains": null,
+      "portMappings": [
+        {
+          "hostPort": 80,
+          "containerPort": 8080,
+          "protocol": "tcp"
+        }
+      ],
+      "hostname": null,
+      "essential": true,
+      "entryPoint": null,
+      "mountPoints": [],
+      "name": "website",
+      "ulimits": null,
+      "dockerSecurityOptions": null,
+      "environment": [
+        {
+          "name": "SERVICES_URL",
+          "value": "http://services-13185568.us-west-2.elb.amazonaws.com:8080/subscriber"
+        }
+      ],
+      "links": null,
+      "workingDirectory": null,
+      "readonlyRootFilesystem": null,
+      "image": "gevgev/website-node:v1",
+      "command": null,
+      "user": null,
+      "dockerLabels": null,
+      "logConfiguration": null,
+      "cpu": 10,
+      "privileged": null
+    }
+  ],
+  "volumes": [],
+  "family": "website"
+}
